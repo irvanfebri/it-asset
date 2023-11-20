@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\ClassroomResource\Pages;
 use App\Filament\Resources\ClassroomResource\RelationManagers;
 use App\Models\Classroom;
@@ -12,6 +13,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class ClassroomResource extends Resource
 {
@@ -23,9 +26,11 @@ class ClassroomResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->label('Nama Classroom')
-                ->required(),
-                Forms\Components\TextInput::make('slug'),
+                TextInput::make('name')
+                ->live()
+                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+
+                TextInput::make('slug')
             ]);
     }
 
