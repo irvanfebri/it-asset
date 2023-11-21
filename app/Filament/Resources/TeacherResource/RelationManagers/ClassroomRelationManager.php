@@ -3,12 +3,16 @@
 namespace App\Filament\Resources\TeacherResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ClassroomRelationManager extends RelationManager
 {
@@ -19,10 +23,23 @@ class ClassroomRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('classrooms_id')
-                ->relationship('classroom', 'name'),
+                    ->relationship('classroom', 'name')
+                    ->createOptionAction(
+                        fn (Action $action) => $action->modalWidth('3xl'),
+                    )
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                        Hidden::make('slug')
+                    ]),
+
+
+
 
                 Forms\Components\Select::make('periode_id')
-                ->relationship('periode', 'name'),
+                    ->relationship('periode', 'name'),
 
 
             ]);

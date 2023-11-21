@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Tables\Actions\CreateAction;
+
 class StudentResource extends Resource
 {
     protected static ?string $model = Student::class;
@@ -67,6 +69,9 @@ class StudentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
+            // ->headerActions([
+            //     Tables\Actions\CreateAction::make(),
+            // ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ]);
