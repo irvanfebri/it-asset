@@ -16,7 +16,7 @@ class Classroom extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function classroom(): HasMany
+    public function homerooms(): HasMany
     {
         return $this->hasMany(HomeRoom::class, 'teachers_id', 'id');
     }
