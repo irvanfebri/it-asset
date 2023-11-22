@@ -20,4 +20,7 @@ class Classroom extends Model
     {
         return $this->hasMany(HomeRoom::class, 'teachers_id', 'id');
     }
+
+
+
 }

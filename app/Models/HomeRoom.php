@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 
 class HomeRoom extends Model
@@ -17,7 +17,7 @@ class HomeRoom extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function teacher(): BelongsTo
+    public function teacher()
     {
         return $this->belongsTo(Teacher::class, 'teachers_id', 'id');
     }
@@ -27,7 +27,7 @@ class HomeRoom extends Model
      *
      * @return \Illuminate\DatabaClassroomloquent\Relations\BelongsTo
      */
-    public function classroom(): BelongsTo
+    public function classroom()
     {
         return $this->belongsTo(Classroom::class, 'classrooms_id', 'id');
     }
@@ -37,7 +37,7 @@ class HomeRoom extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function periode(): BelongsTo
+    public function periode()
     {
         return $this->belongsTo(Periode::class, 'periode_id', 'id');
     }

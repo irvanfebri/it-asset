@@ -21,7 +21,7 @@ class StudentHasClassResource extends Resource
     protected static ?string $model = StudentHasClass::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static string $relationship = 'classroom';
+
 
     public static function form(Form $form): Form
     {
@@ -34,12 +34,12 @@ class StudentHasClassResource extends Resource
                     ->label('Students'),
                 Forms\Components\Select::make('homerooms_id')
                     ->searchable()
-                    ->options(HomeRoom::all()->pluck('classroom.name','id'))
-                    ->label('Class Berapa'),
+                    ->options(HomeRoom::all()->pluck('classrooms.name','id'))
+                    ->label('Class'),
                 Forms\Components\Select::make('periode_id')
                     ->searchable()
                     ->options(Periode::all()->pluck('name','id'))
-                    ->label('Periode'),
+                    ->label('Periodfe'),
 
             ])->columns(3);
     }

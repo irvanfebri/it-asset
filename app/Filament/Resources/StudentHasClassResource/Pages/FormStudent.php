@@ -21,8 +21,8 @@ class FormStudent extends Page implements HasForms
 
     protected static string $view = 'filament.resources.student-has-class-resource.pages.form-student';
 
-    public $student =[];
-    public $homeroom = '';
+    public $students =[];
+    public $homerooms = '';
     public $periode = '';
 
     public function mount():void
@@ -43,7 +43,7 @@ class FormStudent extends Page implements HasForms
                         Forms\Components\Select::make('homerooms_id')
                             ->searchable()
                             ->options(HomeRoom::all()->pluck('classroom.name','id'))
-                            ->label('Class Berapa'),
+                            ->label('Class'),
                         Forms\Components\Select::make('periode_id')
                             ->searchable()
                             ->options(Periode::all()->pluck('name','id'))
@@ -53,9 +53,9 @@ class FormStudent extends Page implements HasForms
     }
 
     public function save() {
-        $student = $this->students;
+        $students = $this->students;
         $insert = [];
-        foreach($student as $row) {
+        foreach($students as $row) {
             array_push($insert, [
                 'students_id' => $row,
                 'homerooms_id' => $this->homerooms,
