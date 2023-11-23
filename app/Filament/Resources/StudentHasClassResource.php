@@ -4,14 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentHasClassResource\Pages;
 use App\Filament\Resources\StudentHasClassResource\RelationManagers;
+use App\Models\Classroom;
 use App\Models\HomeRoom;
 use App\Models\Periode;
 use App\Models\Student;
 use App\Models\StudentHasClass;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -22,38 +27,48 @@ class StudentHasClassResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = "Student Has Class";
+
+    protected static ?string $navigationGroup = 'Academic';
+
+    protected static ?int $navigationSort = 23;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('students_id')
-                    ->searchable()
-                    ->multiple()
-                    ->options(Student::all()->pluck('name','id'))
-                    ->label('Students'),
-                Forms\Components\Select::make('homerooms_id')
-                    ->searchable()
-                    ->options(HomeRoom::all()->pluck('classrooms.name','id'))
-                    ->label('Class'),
-                Forms\Components\Select::make('periode_id')
-                    ->searchable()
-                    ->options(Periode::all()->pluck('name','id'))
-                    ->label('Periodfe'),
+                Card::make()
+                    ->schema([
+                        Select::make('students_id')
+                            ->searchable()
+                            ->options(Student::all()->pluck('name', 'id'))
+                            ->label('Student'),
+                        Select::make('classrooms_id')
+                            ->searchable()
+                            ->options(Classroom::all()->pluck('name', 'id'))
+                            ->label('Class e'),
+                        Select::make('periode_id')
+                            ->label("Pericxcxode")
+                            ->searchable()
+                            ->options(Periode::all()->pluck('name', 'id'))
+                ])->columns(3)
 
-            ])->columns(3);
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('students.name'),
-                Tables\Columns\TextColumn::make('homeroom.classroom.name'),
-
+                TextColumn::make('students.name'),
+                TextColumn::make('classrooms.name'),
+                TextColumn::make('periode.name')
             ])
             ->filters([
-                //
+                SelectFilter::make('homerooms_id')
+                    ->options(HomeRoom::all()->pluck('classroom.name', 'id')),
+                SelectFilter::make('periode_id')
+                    ->options(Periode::all()->pluck('name', 'id'))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -65,7 +80,8 @@ class StudentHasClassResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->paginated([10, 25, 50, 100, 'all']);
     }
 
     public static function getRelations(): array
@@ -79,7 +95,7 @@ class StudentHasClassResource extends Resource
     {
         return [
             'index' => Pages\ListStudentHasClasses::route('/'),
-            'create' => Pages\FormStudent::route('/create'),
+            'create' => Pages\CreateStudentHasClass::route('/create'),
             'edit' => Pages\EditStudentHasClass::route('/{record}/edit'),
         ];
     }

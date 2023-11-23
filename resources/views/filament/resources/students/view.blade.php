@@ -24,7 +24,8 @@
         });
 
         function makeCode() {
-            var elText = "Hallo";
+            var elText = "ffsdfdso";
+
             qrcode.makeCode(elText);
         }
     makeCode();

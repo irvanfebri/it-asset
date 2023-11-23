@@ -16,11 +16,14 @@ class Classroom extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function homerooms(): HasMany
-    {
-        return $this->hasMany(HomeRoom::class, 'teachers_id', 'id');
-    }
+    // public function homerooms(): HasMany
+    // {
+    //     return $this->hasMany(HomeRoom::class, 'teachers_id', 'id');
+    // }
 
+    public function subjects(){
+        return $this->belongsToMany(Subject::class);
+    }
 
 
 }
