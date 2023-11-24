@@ -31,6 +31,12 @@ return [
     |
     */
 
+    'flare' => [
+        'driver' => 'flare',
+    ],
+
+
+
     'deprecations' => [
         'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
         'trace' => false,
@@ -54,7 +60,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single','flare'],
             'ignore_exceptions' => false,
         ],
 

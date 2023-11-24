@@ -10,7 +10,7 @@
     });
 
     function makeCode() {
-        var elText =  {{ $getRecord()->name }}
+        var elText =  {{ $getRecord()->nis }}
 
 
         qrcode.makeCode(elText);
